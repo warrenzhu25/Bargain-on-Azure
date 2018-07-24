@@ -12,17 +12,17 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ResourceSupply")
-public class ResourceSupply {
+@Table(name = "Resource")
+public class Resource {
 
     @Id
     private Long id;
 
     private Integer count;
 
-    private Integer cost;
-
-    private Integer basicPrice;
-
     private ResourceType type;
+
+    private double cost;
+
+    private double price;
 }
