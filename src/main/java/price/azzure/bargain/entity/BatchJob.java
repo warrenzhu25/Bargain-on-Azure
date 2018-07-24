@@ -24,6 +24,10 @@ public class BatchJob {
 
     private Date deadline;
 
+    private Date suggestDeadline;
+
+    private double suggestedPrice;
+
     private JobStatus status;
 
     private JobDetail detail;
