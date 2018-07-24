@@ -11,8 +11,8 @@ import java.util.Date;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "ActiveJob")
-public class ActiveJob {
+@Table(name = "BatchJob")
+public class BatchJob {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +20,11 @@ public class ActiveJob {
 
     private Date startTime;
 
-    private int price;
+    private double price;
+
+    private Date deadline;
+
+    private JobStatus status;
+
+    private JobDetail detail;
 }
