@@ -13,6 +13,7 @@ import price.azzure.bargain.repository.BatchJobRepository;
 import price.azzure.bargain.repository.ResourceRepository;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -46,15 +47,18 @@ public class WebController {
 
     @GetMapping("/getRemainChart")
     public List<ResourceRemain> getRemainChart() {
+        List<ResourceRemain> resourceRemainList = new ArrayList<>();
         int cpuTotal = resourceRepository.findCountByType("CPU");
         int memoryTotal = resourceRepository.findCountByType("MEMORY");
         int diskTotal = resourceRepository.findCountByType("DISK");
 
-        Calendar calendar = Calendar.getInstance();
-        for(int i=0; i<3; i++){
-            calendar.set(Calendar.DATE,-i);
-            int count=jobRepository.findActiveJobResouceCountByDate(calendar.getTime());
-        }
+//        Calendar calendar = Calendar.getInstance();
+//        for(int i = 0; i < 3; i++){
+//            calendar.set(Calendar.DATE, -i);
+//            int count=jobRepository.findCpuCountByDate(calendar.getTime());
+//            ResourceRemain resourceRemain = new ResourceRemain(count, calendar.getTime(),"CPU");
+//            resourceRemainList.add(resourceRemain);
+//        }
         return Lists.newArrayList();
     }
 
