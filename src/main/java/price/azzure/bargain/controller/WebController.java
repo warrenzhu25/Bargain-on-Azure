@@ -1,4 +1,4 @@
-package price.azzure.bargain;
+package price.azzure.bargain.controller;
 
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,9 @@ public class WebController {
     @Autowired
     private BatchJobRepository jobRepository;
 
+    @Autowired
+    private ResourceController ResourceController;
+
     @PostMapping("/jobs")
     public BatchJob submitJob(BatchJob job){
         //TODO: validate price and deadline first
@@ -40,7 +43,7 @@ public class WebController {
     }
 
     @GetMapping("/resources")
-    public List<Resource> getResourceSupply(){
+    public List<Resource> getResource(){
         //TODO: we should return from last 7 days to future 7 days
         return Lists.newArrayList(resourceRepository.findAll());
     }
