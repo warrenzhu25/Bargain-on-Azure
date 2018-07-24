@@ -6,11 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import price.azzure.bargain.entity.BatchJob;
-import price.azzure.bargain.entity.Price;
-import price.azzure.bargain.entity.ResourceSupply;
+import price.azzure.bargain.entity.Resource;
 import price.azzure.bargain.repository.BatchJobRepository;
-import price.azzure.bargain.repository.PriceRepository;
-import price.azzure.bargain.repository.ResourceSupplyRepository;
+import price.azzure.bargain.repository.ResourceRepository;
 
 import java.util.List;
 
@@ -18,13 +16,10 @@ import java.util.List;
 public class WebController {
 
     @Autowired
-    private ResourceSupplyRepository resourceSupplyRepository;
+    private ResourceRepository resourceRepository;
 
     @Autowired
     private BatchJobRepository jobRepository;
-
-    @Autowired
-    private PriceRepository priceRepository;
 
     @PostMapping("/jobs")
     public BatchJob submitJob(BatchJob job){
@@ -40,15 +35,9 @@ public class WebController {
     }
 
     @GetMapping("/resources")
-    public List<ResourceSupply> getResourceSupply(){
+    public List<Resource> getResourceSupply(){
         //TODO: we should return from last 7 days to future 7 days
-        return Lists.newArrayList(resourceSupplyRepository.findAll());
-    }
-
-    @GetMapping("/prices")
-    public List<Price> getPrices(){
-        //TODO: we should return from last 7 days to future 7 days
-        return Lists.newArrayList(priceRepository.findAll());
+        return Lists.newArrayList(resourceRepository.findAll());
     }
 
     private boolean validatePriceOrDeadline(BatchJob batchJob){

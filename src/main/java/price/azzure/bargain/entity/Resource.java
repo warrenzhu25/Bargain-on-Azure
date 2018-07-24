@@ -11,8 +11,8 @@ import java.util.Date;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "ResourceSupply")
-public class ResourceSupply {
+@Table(name = "Resource")
+public class Resource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +21,6 @@ public class ResourceSupply {
     private Date timeStamp;
 
     private ResourceType type;
+
+    private double price;
 }
