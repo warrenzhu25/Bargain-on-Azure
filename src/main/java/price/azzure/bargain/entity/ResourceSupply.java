@@ -1,4 +1,4 @@
-package price.azzure.bargain;
+package price.azzure.bargain.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

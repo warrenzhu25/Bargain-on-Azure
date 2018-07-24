@@ -1,4 +1,4 @@
-package price.azzure.bargain;
+package price.azzure.bargain.entity;
 
 public enum ResourceType {
     CPU,
