@@ -1,4 +1,4 @@
-package price.azzure.bargain;
+package price.azzure.bargain.controller;
 
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,9 @@ public class WebController {
 
     @Autowired
     private PriceRepository priceRepository;
+
+    @Autowired
+    private ResourceSupplyController resourceSupplyController;
 
     @PostMapping("/jobs")
     public BatchJob submitJob(BatchJob job){
