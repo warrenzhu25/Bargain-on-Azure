@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import price.azzure.bargain.dto.Price;
+import price.azzure.bargain.dto.ResourceRemain;
 import price.azzure.bargain.entity.BatchJob;
 import price.azzure.bargain.entity.Resource;
 import price.azzure.bargain.repository.BatchJobRepository;
@@ -38,6 +40,16 @@ public class WebController {
     public List<Resource> getResourceSupply(){
         //TODO: we should return from last 7 days to future 7 days
         return Lists.newArrayList(resourceRepository.findAll());
+    }
+
+    @GetMapping("/getRemainChart")
+    public List<ResourceRemain> getRemainChart() {
+        return Lists.newArrayList();
+    }
+
+    @GetMapping("/getPriceChart")
+    public List<Price> getPriceChart() {
+        return Lists.newArrayList();
     }
 
     private boolean validatePriceOrDeadline(BatchJob batchJob){
