@@ -15,7 +15,7 @@
 
     <properties>
         <maven.build.timestamp.format>yyyy_MM_dd-HH_mm</maven.build.timestamp.format>
-        <docker.image.tag>${maven.build.timestamp}</docker.image.tag>
+        <docker.image.tag>latest</docker.image.tag>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
