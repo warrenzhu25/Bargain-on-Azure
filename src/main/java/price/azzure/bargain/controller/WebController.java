@@ -16,7 +16,6 @@ import price.azzure.bargain.repository.ResourceRepository;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -50,9 +49,9 @@ public class WebController {
     private JobDetailsRepository jobDetailsRepository;
 
     // For network testing
-    @GetMapping
+    @GetMapping("/greeting")
     public String greeting() {
-        return "greeting:1";
+        return "greeting:2";
     }
 
     @PostMapping("/jobs")
