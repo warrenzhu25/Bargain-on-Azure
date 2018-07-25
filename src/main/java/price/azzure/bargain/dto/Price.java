@@ -7,11 +7,11 @@ import java.util.Date;
 
 @Data
 public class Price {
-    String price;
+    double price;
     String date;
     ResourceType resourceType;
 
-    public Price(String price, String date, ResourceType resourceType) {
+    public Price(double price, String date, ResourceType resourceType) {
         this.price = price;
         this.date = date;
         this.resourceType = resourceType;

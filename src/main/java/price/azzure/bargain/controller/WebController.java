@@ -241,8 +241,8 @@ public class WebController {
         return diskCount;
     }
 
-    private String calculatePrice(int total, double remain, double basicPrice) {
-        return new DecimalFormat("#.00").format(basicPrice * (2 - remain / total));
+    private double calculatePrice(int total, double remain, double basicPrice) {
+        return Double.valueOf(new DecimalFormat("#.00").format(basicPrice * (2 - remain / total * 10)));
     }
 
     private boolean validatePriceOrDeadline(BatchJob batchJob) {
