@@ -131,6 +131,15 @@ public class WebController {
         return priceList;
     }
 
+    /**
+     * Return last 3 days.
+     */
+    @GetMapping("/getProfitChart")
+    public List<Price> getProfitChart() {
+        List<Price> profitList = new ArrayList<>();
+        return profitList;
+    }
+
     private int findCpuCount(List<BatchJob> jobs) {
         int cpuCount = 0;
         for (BatchJob job : jobs) {
