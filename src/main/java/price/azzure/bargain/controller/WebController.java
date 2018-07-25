@@ -242,7 +242,7 @@ public class WebController {
     }
 
     private double calculatePrice(int total, double remain, double basicPrice) {
-        return Double.valueOf(new DecimalFormat("#.00").format(basicPrice * (2 - remain / total * 10)));
+        return Double.valueOf(new DecimalFormat("#.00").format(basicPrice * (1 - (1 - remain / total ) * 8)));
     }
 
     private boolean validatePriceOrDeadline(BatchJob batchJob) {
