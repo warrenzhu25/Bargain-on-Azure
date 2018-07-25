@@ -1,7 +1,9 @@
 package price.azzure.bargain.dto;
 
+import lombok.Data;
 import price.azzure.bargain.entity.ResourceType;
 
+@Data
 public class Usage {
     int usage;
     String date;
