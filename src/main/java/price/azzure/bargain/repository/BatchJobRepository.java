@@ -11,5 +11,4 @@ public interface BatchJobRepository extends CrudRepository<BatchJob, Long> {
 
     @Query("SELECT j FROM BatchJob j WHERE ?1 BETWEEN j.startTime AND j.deadline")
     List<BatchJob> findActiveJobsByDate(Date date);
-
 }
