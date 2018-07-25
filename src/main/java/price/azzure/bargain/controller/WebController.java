@@ -52,7 +52,7 @@ public class WebController {
     // For network testing
     @GetMapping("/greeting")
     public String greeting() {
-        return "greeting:3";
+        return "greeting:6";
     }
 
     @PostMapping("/jobs")
@@ -258,7 +258,7 @@ public class WebController {
             batchJob.setSuggestedPrice(suggestPrice);
             batchJob.setSuggestDeadline(suggestDeadline);
 
-            return true;
+            return false;
         } else if(batchJob.getPrice() != null){
             batchJob.setSuggestDeadline(computeDeadline(batchJob));
         } else if(batchJob.getDeadline() != null){
