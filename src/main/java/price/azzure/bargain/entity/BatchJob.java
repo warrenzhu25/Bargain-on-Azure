@@ -29,10 +29,12 @@ public class BatchJob {
 
     private double suggestedPrice;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "jobStatus")
     private JobStatus status;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "details")
     @JsonBackReference
     private JobDetail detail;
 }

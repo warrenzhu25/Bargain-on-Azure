@@ -24,7 +24,10 @@ public class WebController {
     private BatchJobRepository jobRepository;
 
     @Autowired
-    private ResourceController ResourceController;
+    private ResourceController resourceController;
+
+    @Autowired
+    private BatchJobController batchJobController;
 
     @PostMapping("/jobs")
     public BatchJob submitJob(BatchJob job){

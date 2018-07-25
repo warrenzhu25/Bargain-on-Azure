@@ -20,6 +20,8 @@ public class Resource {
 
     private Integer count;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "resourceType")
     private ResourceType type;
 
     private double cost;

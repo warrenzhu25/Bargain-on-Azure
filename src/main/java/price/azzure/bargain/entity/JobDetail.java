@@ -4,11 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.HashMap;
-import java.util.Map;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -18,6 +14,7 @@ import java.util.Map;
 public class JobDetail {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer cpuCount;
@@ -26,10 +23,12 @@ public class JobDetail {
 
     private Integer diskCount;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "jobType")
     private JobType type;
 
-    public Map<ResourceType, Integer> getEstimatedResourceUsage(){
-        //TODO: an algorithm to estimate resource required for running the job
-        return new HashMap<>();
-    }
+//    public Map<ResourceType, Integer> getEstimatedResourceUsage(){
+//        //TODO: an algorithm to estimate resource required for running the job
+//        return new HashMap<>();
+//    }
 }

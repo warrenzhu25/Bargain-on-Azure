@@ -36,7 +36,7 @@ public class ResourceController {
     private static final Resource MEMORY_RESOURCE = new Resource(
             MEMORY_ID, MEMORY_COUNT, MEMORY, MEMORY_COST, MEMORY_BASIC_PRICE);
     private static final Resource DISK_RESOURCE = new Resource(
-            DISK_ID, DISK_COUNT, MEMORY, DISK_COST, DISK_BASIC_PRICE);
+            DISK_ID, DISK_COUNT, DISK, DISK_COST, DISK_BASIC_PRICE);
 
     private ResourceRepository repository;
 
