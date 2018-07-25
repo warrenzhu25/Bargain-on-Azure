@@ -8,10 +8,10 @@ import java.util.Date;
 @Data
 public class ResourceRemain {
     int count;
-    Date date;
+    String date;
     ResourceType resourceType;
 
-    public ResourceRemain(int count, Date date, ResourceType resourceType){
+    public ResourceRemain(int count, String date, ResourceType resourceType){
         this.count=count;
         this.date=date;
         this.resourceType=resourceType;

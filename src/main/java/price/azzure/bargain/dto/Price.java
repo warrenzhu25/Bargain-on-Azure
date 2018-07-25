@@ -8,10 +8,10 @@ import java.util.Date;
 @Data
 public class Price {
     double price;
-    Date date;
+    String date;
     ResourceType resourceType;
 
-    public Price(double price, Date date, ResourceType resourceType) {
+    public Price(double price, String date, ResourceType resourceType) {
         this.price = price;
         this.date = date;
         this.resourceType = resourceType;
