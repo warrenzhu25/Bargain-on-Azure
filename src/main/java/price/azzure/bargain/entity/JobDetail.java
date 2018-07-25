@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @Getter
 @Setter
@@ -25,10 +24,6 @@ public class JobDetail {
     private Integer memoryCount = 40;
 
     private Integer diskCount = 50;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "jobType")
-    private JobType type;
 
     public Map<ResourceType, Integer> getEstimatedResourceUsage(){
         //TODO: an algorithm to estimate resource required for running the job
