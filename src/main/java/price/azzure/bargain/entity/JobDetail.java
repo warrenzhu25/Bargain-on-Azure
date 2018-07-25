@@ -20,11 +20,11 @@ public class JobDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer cpuCount = new Random().nextInt(50) + 20;
+    private Integer cpuCount = 30;
 
-    private Integer memoryCount = new Random().nextInt(50) + 10;
+    private Integer memoryCount = 40;
 
-    private Integer diskCount = new Random().nextInt(50) + 30;
+    private Integer diskCount = 50;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "jobType")
