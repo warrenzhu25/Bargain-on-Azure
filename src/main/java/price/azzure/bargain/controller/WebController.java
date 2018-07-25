@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -201,17 +202,17 @@ public class WebController {
         double price = priceByType.get(dominantResourceType);
         double cost = costByType.get(dominantResourceType);
 
-        Period period = between(new Date(), job.getDeadline());
-
-        return cost + (price - cost) * daysToDiscount(period.getDays());
+        long days = betweenInDays(new Date(), job.getDeadline());
+        double discount = daysToDiscount(days);
+        return cost + (price - cost) * discount;
     }
 
-    private static double daysToDiscount(int days){
-        return 1 - days / 365 * 0.2;
+    private static double daysToDiscount(long days){
+        return 1 - days / 365.0 * 0.5;
     }
 
     private static int discountToDays(double discount){
-        return (int)((1 - discount) * 4 * 365);
+        return (int)((1 - discount) * 2 * 365);
     }
 
     private Date computeDeadline(BatchJob job) {
@@ -272,10 +273,10 @@ public class WebController {
         return Collectors.toMap((e) -> e.getKey(), (e) -> e.getValue());
     }
 
-    private static Period between(Date from, Date to) {
+    private static long betweenInDays(Date from, Date to) {
         LocalDate localFrom = from.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate localTo = to.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        return Period.between(localFrom, localTo);
+        return ChronoUnit.DAYS.between(localFrom, localTo);
     }
 }
