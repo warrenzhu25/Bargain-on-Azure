@@ -2,15 +2,14 @@ package price.azzure.bargain.controller;
 
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import price.azzure.bargain.dto.Price;
 import price.azzure.bargain.dto.ResourceRemain;
 import price.azzure.bargain.entity.BatchJob;
 import price.azzure.bargain.entity.Resource;
 import price.azzure.bargain.entity.ResourceType;
 import price.azzure.bargain.repository.BatchJobRepository;
+import price.azzure.bargain.repository.JobDetailsRepository;
 import price.azzure.bargain.repository.ResourceRepository;
 
 import java.time.LocalDate;
@@ -42,17 +41,31 @@ public class WebController {
     @Autowired
     private BatchJobController batchJobController;
 
+    @Autowired
+    private JobDetailsRepository jobDetailsRepository;
+
     @PostMapping("/jobs")
-    public BatchJob submitJob(BatchJob job) {
+    public BatchJob submitJob(@RequestBody BatchJob job) {
         //TODO: validate price and deadline first
 
         // if both price and deadline both provided and valid, just save
         if (validatePriceOrDeadline(job)) {
+            jobDetailsRepository.save(job.getDetail());
             return jobRepository.save(job);
         }
 
         // return job with suggested price or deadline
         return job;
+    }
+
+    @GetMapping("/jobs")
+    public List<BatchJob> listJobs() {
+        return Lists.newArrayList(jobRepository.findAll());
+    }
+
+    @DeleteMapping("/jobs/{id}")
+    public void deleteJob(@PathVariable("id") long id){
+        jobRepository.deleteById(id);
     }
 
     @GetMapping("/resources")
@@ -157,7 +170,25 @@ public class WebController {
     }
 
     private boolean validatePriceOrDeadline(BatchJob batchJob) {
-        return true;
+        if(batchJob.getPrice() != null && batchJob.getDeadline() != null){
+            double suggestPrice = computePrice(batchJob);
+            Date suggestDeadline = computeDeadline(batchJob);
+
+            if(suggestPrice < batchJob.getPrice()) {
+                return true;
+            }
+
+            batchJob.setSuggestedPrice(suggestPrice);
+            batchJob.setSuggestDeadline(suggestDeadline);
+
+            return true;
+        } else if(batchJob.getPrice() != null){
+            batchJob.setSuggestDeadline(computeDeadline(batchJob));
+        } else if(batchJob.getDeadline() != null){
+            batchJob.setSuggestedPrice(computePrice(batchJob));
+        }
+
+        return false;
     }
 
     private double computePrice(BatchJob job) {
@@ -169,11 +200,15 @@ public class WebController {
 
         Period period = between(new Date(), job.getDeadline());
 
-        int weight = -(int) Math.log(resourceUsage.get(dominantResourceType) / period.getDays() /
-                getResource
-                        (dominantResourceType));
+        return cost + (price - cost) * daysToDiscount(period.getDays());
+    }
 
-        return cost + (price - cost) * weight / (weight + 1);
+    private static double daysToDiscount(int days){
+        return 1 - days / 365 * 0.2;
+    }
+
+    private static int discountToDays(double discount){
+        return (int)((1 - discount) * 4 * 365);
     }
 
     private Date computeDeadline(BatchJob job) {
@@ -184,10 +219,9 @@ public class WebController {
         double cost = costByType.get(dominantResourceType);
         double profit = price - cost;
 
-        int weight = (int) (1 / (1 - (job.getPrice() - cost) / profit));
+        double discount = (job.getPrice() - cost) / profit ;
 
-        int days = (int) Math.pow(2, -weight) * getResource(dominantResourceType) / resourceUsage.get
-                (dominantResourceType);
+        int days = discountToDays(discount);
         LocalDate localDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         return Date.from(localDate.plusDays(days).atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -240,9 +274,5 @@ public class WebController {
         LocalDate localTo = to.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         return Period.between(localFrom, localTo);
-    }
-
-    private int getResource(ResourceType resourceType) {
-        return 0;
     }
 }
