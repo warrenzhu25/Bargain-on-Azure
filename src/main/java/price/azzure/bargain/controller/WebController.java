@@ -251,7 +251,7 @@ public class WebController {
             double suggestPrice = computePrice(batchJob);
             Date suggestDeadline = computeDeadline(batchJob);
 
-            if(suggestPrice - 1 < batchJob.getPrice()) {
+            if(suggestPrice < batchJob.getPrice() || (suggestPrice - batchJob.getPrice()) / suggestPrice < 0.01) {
                 return true;
             }
 
