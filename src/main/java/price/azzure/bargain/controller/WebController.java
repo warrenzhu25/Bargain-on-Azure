@@ -251,7 +251,7 @@ public class WebController {
             double suggestPrice = computePrice(batchJob);
             Date suggestDeadline = computeDeadline(batchJob);
 
-            if(suggestPrice < batchJob.getPrice()) {
+            if(suggestPrice - 1 < batchJob.getPrice()) {
                 return true;
             }
 
@@ -272,8 +272,8 @@ public class WebController {
         Map<ResourceType, Integer> resourceUsage = job.getDetail().getEstimatedResourceUsage();
         ResourceType dominantResourceType = getDomainateResource(resourceUsage);
 
-        double price = priceByType.get(dominantResourceType);
-        double cost = costByType.get(dominantResourceType);
+        double price = priceByType.get(dominantResourceType) * resourceUsage.get(dominantResourceType);
+        double cost = costByType.get(dominantResourceType) * resourceUsage.get(dominantResourceType);
 
         long days = betweenInDays(new Date(), job.getDeadline());
         double discount = daysToDiscount(days);
@@ -292,8 +292,8 @@ public class WebController {
         Map<ResourceType, Integer> resourceUsage = job.getDetail().getEstimatedResourceUsage();
         ResourceType dominantResourceType = getDomainateResource(resourceUsage);
 
-        double price = priceByType.get(dominantResourceType);
-        double cost = costByType.get(dominantResourceType);
+        double price = priceByType.get(dominantResourceType) * resourceUsage.get(dominantResourceType);
+        double cost = costByType.get(dominantResourceType) * resourceUsage.get(dominantResourceType);
         double profit = price - cost;
 
         double discount = (job.getPrice() - cost) / profit ;
@@ -322,18 +322,18 @@ public class WebController {
 
     private static Map<ResourceType, Double> getResourceCost() {
         return Collections.unmodifiableMap(Stream.of(
-                entry(CPU, 1000.0),
-                entry(MEMORY, 800.0),
-                entry(DISK, 200.0),
+                entry(CPU, 100.0),
+                entry(MEMORY, 80.0),
+                entry(DISK, 20.0),
                 entry(ResourceType.GPU, 120.0)
         ).collect(entriesToMap()));
     }
 
     private static Map<ResourceType, Double> getResourcePrice() {
         return Collections.unmodifiableMap(Stream.of(
-                entry(CPU, 1000.0 * 2),
-                entry(MEMORY, 800.0 * 2),
-                entry(DISK, 200.0 * 2),
+                entry(CPU, 100.0 * 2),
+                entry(MEMORY, 80.0 * 2),
+                entry(DISK, 20.0 * 2),
                 entry(ResourceType.GPU, 120.0 * 2)
         ).collect(entriesToMap()));
     }
