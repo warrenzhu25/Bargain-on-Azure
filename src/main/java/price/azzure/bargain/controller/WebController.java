@@ -14,6 +14,7 @@ import price.azzure.bargain.repository.BatchJobRepository;
 import price.azzure.bargain.repository.JobDetailsRepository;
 import price.azzure.bargain.repository.ResourceRepository;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -240,8 +241,8 @@ public class WebController {
         return diskCount;
     }
 
-    private double calculatePrice(int total, double remain, double basicPrice) {
-        return basicPrice * (2 - remain / total);
+    private String calculatePrice(int total, double remain, double basicPrice) {
+        return new DecimalFormat("#.00").format(basicPrice * (2 - remain / total));
     }
 
     private boolean validatePriceOrDeadline(BatchJob batchJob) {
