@@ -14,6 +14,8 @@
     <packaging>jar</packaging>
 
     <properties>
+        <maven.build.timestamp.format>yyyy_MM_dd-HH_mm</maven.build.timestamp.format>
+        <docker.image.tag>latest</docker.image.tag>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -75,10 +77,11 @@
                         </goals>
                         <configuration>
                             <repository>bargainonazure.azurecr.io/bargain-on-azure</repository>
-                            <tag>latest</tag>
+                            <tag>${docker.image.tag}</tag>
                             <buildArgs>
                                 <JAR_FILE>bargin-on-azure-${project.version}.jar</JAR_FILE>
                             </buildArgs>
+                            <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                         </configuration>
                     </execution>
                 </executions>
@@ -97,8 +100,8 @@
                     <appName>bargain-on-azure</appName>
                     <region>eastus</region>
                     <containerSettings>
-                        <imageName>bargainonazure.azurecr.io/bargain-on-azure:latest</imageName>
-                        <serverId>azure-price-acr</serverId>
+                        <imageName>bargainonazure.azurecr.io/bargain-on-azure:${docker.image.tag}</imageName>
+                        <serverId>bargainonazure.azurecr.io</serverId>
                         <registryUrl>https://bargainonazure.azurecr.io</registryUrl>
                     </containerSettings>
                     <appSettings>

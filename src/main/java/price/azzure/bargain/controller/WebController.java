@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import price.azzure.bargain.dto.Price;
+import price.azzure.bargain.dto.Profit;
 import price.azzure.bargain.dto.ResourceRemain;
 import price.azzure.bargain.entity.BatchJob;
 import price.azzure.bargain.entity.Resource;
@@ -144,6 +145,41 @@ public class WebController {
         }
         return priceList;
     }
+
+    /**
+     * Return last 3 days.
+     */
+    @GetMapping("/getProfitChart")
+    public List<Profit> getProfitChart() {
+        List<Profit> profitList = new ArrayList<>();
+        for (int i = 2; i >= 0; i--) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -i);
+            List<BatchJob> jobs = jobRepository.findByStartTimeBefore(calendar.getTime());
+            String date = new SimpleDateFormat("MM.dd").format(calendar.getTime());
+            int profitSum = 0;
+            for(BatchJob job: jobs){
+                profitSum += job.getPrice() - getTotalCost(job);
+            }
+            Profit profit = new Profit(profitSum, date);
+            profitList.add(profit);
+        }
+        return profitList;
+    }
+
+    private double getTotalCost(BatchJob job) {
+        double cpuProfit = job.getDetail().getCpuCount() * resourceController.getResourceCostByType(CPU);
+        double memoryProfit =job.getDetail().getMemoryCount() * resourceController.getResourceCostByType(MEMORY);
+        double diskProfit = job.getDetail().getDiskCount() * resourceController.getResourceCostByType(DISK);
+        return getMax(cpuProfit, memoryProfit, diskProfit);
+    }
+
+    private double getMax(double a, double b, double c) {
+        double max = (a > b) ? a : b;
+        max = (max > c) ? max : c;
+        return max;
+    }
+
 
     private int findCpuCount(List<BatchJob> jobs) {
         int cpuCount = 0;
