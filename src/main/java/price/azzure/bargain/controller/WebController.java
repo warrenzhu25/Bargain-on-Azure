@@ -321,18 +321,18 @@ public class WebController {
 
     private static Map<ResourceType, Double> getResourceCost() {
         return Collections.unmodifiableMap(Stream.of(
-                entry(CPU, 100.0),
-                entry(MEMORY, 80.0),
-                entry(DISK, 20.0),
+                entry(CPU, 1000.0),
+                entry(MEMORY, 800.0),
+                entry(DISK, 200.0),
                 entry(ResourceType.GPU, 120.0)
         ).collect(entriesToMap()));
     }
 
     private static Map<ResourceType, Double> getResourcePrice() {
         return Collections.unmodifiableMap(Stream.of(
-                entry(CPU, 100.0 * 2),
-                entry(MEMORY, 80.0 * 2),
-                entry(DISK, 20.0 * 2),
+                entry(CPU, 1000.0 * 2),
+                entry(MEMORY, 800.0 * 2),
+                entry(DISK, 200.0 * 2),
                 entry(ResourceType.GPU, 120.0 * 2)
         ).collect(entriesToMap()));
     }
