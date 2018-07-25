@@ -52,7 +52,7 @@ public class WebController {
     // For network testing
     @GetMapping("/greeting")
     public String greeting() {
-        return "greeting:4";
+        return "greeting:7";
     }
 
     @PostMapping("/jobs")
@@ -204,9 +204,10 @@ public class WebController {
     }
 
     private double getTotalCost(BatchJob job) {
-        double cpuProfit = job.getDetail().getCpuCount() * resourceController.getResourceCostByType(CPU);
-        double memoryProfit =job.getDetail().getMemoryCount() * resourceController.getResourceCostByType(MEMORY);
-        double diskProfit = job.getDetail().getDiskCount() * resourceController.getResourceCostByType(DISK);
+        Map<ResourceType, Double> costs = getResourceCost();
+        double cpuProfit = job.getDetail().getCpuCount() * costs.get(CPU);
+        double memoryProfit =job.getDetail().getMemoryCount() * costs.get(MEMORY);
+        double diskProfit = job.getDetail().getDiskCount() * costs.get(DISK);
         return getMax(cpuProfit, memoryProfit, diskProfit);
     }
 
@@ -242,7 +243,7 @@ public class WebController {
     }
 
     private double calculatePrice(int total, double remain, double basicPrice) {
-        return Double.valueOf(new DecimalFormat("#.00").format(basicPrice * (1 - (1 - remain / total ) * 8)));
+        return Double.valueOf(new DecimalFormat("#.00").format(basicPrice * (1 + (1 - remain / total ) * 10)));
     }
 
     private boolean validatePriceOrDeadline(BatchJob batchJob) {
