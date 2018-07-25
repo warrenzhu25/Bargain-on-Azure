@@ -3,9 +3,12 @@ package price.azzure.bargain.controller;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import price.azzure.bargain.entity.BatchJob;
+import price.azzure.bargain.entity.JobStatus;
 import price.azzure.bargain.repository.BatchJobRepository;
 import price.azzure.bargain.repository.JobDetailsRepository;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -27,5 +30,13 @@ public class BatchJobController {
 
     public Optional<BatchJob> getBatchJobById(@NonNull Long id) {
         return this.batchJobRepository.findById(id);
+    }
+
+    public List<BatchJob> findActiveBatchJobByDate(@NonNull Date date) {
+        return this.batchJobRepository.findByStartTimeAfterAndDeadlineBeforeAndStatus(date, date, JobStatus.STARTED);
+    }
+
+    public List<BatchJob> findBatchJobBeforeDate(@NonNull Date date) {
+        return this.batchJobRepository.findByStartTimeBefore(date);
     }
 }
