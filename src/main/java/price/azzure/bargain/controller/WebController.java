@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import price.azzure.bargain.dto.Price;
 import price.azzure.bargain.dto.Profit;
 import price.azzure.bargain.dto.ResourceRemain;
+import price.azzure.bargain.dto.Usage;
 import price.azzure.bargain.entity.BatchJob;
 import price.azzure.bargain.entity.Resource;
 import price.azzure.bargain.entity.ResourceType;
@@ -77,7 +78,7 @@ public class WebController {
     }
 
     /**
-     * Return last 3 days.
+     * Return last 7 days.
      */
     @GetMapping("/getRemainChart")
     public List<ResourceRemain> getRemainChart() {
@@ -87,7 +88,7 @@ public class WebController {
         int diskTotal = resourceController.getResourceCountByType(DISK);
 
 
-        for (int i = 2; i >= 0; i--) {
+        for (int i = 6; i >= 0; i--) {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, -i);
             List<BatchJob> jobs = jobRepository.findActiveJobsByDate(calendar.getTime());
@@ -110,7 +111,7 @@ public class WebController {
 
 
     /**
-     * Return last 3 days.
+     * Return last 7 days.
      */
     @GetMapping("/getPriceChart")
     public List<Price> getPriceChart() {
@@ -146,12 +147,12 @@ public class WebController {
     }
 
     /**
-     * Return last 3 days.
+     * Return last 7 days.
      */
     @GetMapping("/getProfitChart")
     public List<Profit> getProfitChart() {
         List<Profit> profitList = new ArrayList<>();
-        for (int i = 2; i >= 0; i--) {
+        for (int i = 6; i >= 0; i--) {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, -i);
             List<BatchJob> jobs = jobRepository.findByStartTimeBefore(calendar.getTime());
@@ -164,6 +165,34 @@ public class WebController {
             profitList.add(profit);
         }
         return profitList;
+    }
+
+
+    /**
+     * Return last 7 days.
+     */
+    @GetMapping("/getUsageChart")
+    public List<Usage> getUsageChart() {
+        List<Usage> usageList = new ArrayList<>();
+        for(int i=6; i>=0; i--){
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -i);
+            String date = new SimpleDateFormat("MM.dd").format(calendar.getTime());
+            List<BatchJob> jobs = jobRepository.findByStartTimeBefore(calendar.getTime());
+            int cpuUsage = 0, memoryUsage = 0, diskUsage = 0;
+            for(BatchJob job: jobs){
+                cpuUsage += job.getDetail().getCpuCount();
+                memoryUsage += job.getDetail().getMemoryCount();
+                diskUsage += job.getDetail().getDiskCount();
+            }
+            Usage cU = new Usage(cpuUsage, date, CPU);
+            Usage mU = new Usage(memoryUsage, date, MEMORY);
+            Usage dU = new Usage(diskUsage, date, DISK);
+            usageList.add(cU);
+            usageList.add(mU);
+            usageList.add(dU);
+        }
+        return usageList;
     }
 
     private double getTotalCost(BatchJob job) {
