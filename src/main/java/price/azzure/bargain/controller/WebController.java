@@ -25,6 +25,7 @@ import static price.azzure.bargain.entity.ResourceType.*;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class WebController {
 
     private static final Map<ResourceType, Double> costByType = getResourceCost();
@@ -44,6 +45,12 @@ public class WebController {
 
     @Autowired
     private JobDetailsRepository jobDetailsRepository;
+
+    // For network testing
+    @GetMapping
+    public String greeting() {
+        return "greeting:1";
+    }
 
     @PostMapping("/jobs")
     public BatchJob submitJob(@RequestBody BatchJob job) {
