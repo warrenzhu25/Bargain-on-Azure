@@ -1,6 +1,5 @@
 package price.azzure.bargain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,8 +34,11 @@ public class BatchJob {
     @Column(name = "jobStatus")
     private JobStatus status = JobStatus.SUBMITTED;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "jobType")
+    private JobType type = JobType.MACHINE_LEARNING;
+
     @ManyToOne
     @JoinColumn(name = "details")
-    @JsonBackReference
     private JobDetail detail = new JobDetail();
 }

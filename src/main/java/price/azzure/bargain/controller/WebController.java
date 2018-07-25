@@ -51,7 +51,7 @@ public class WebController {
     // For network testing
     @GetMapping("/greeting")
     public String greeting() {
-        return "greeting:2";
+        return "greeting:3";
     }
 
     @PostMapping("/jobs")
