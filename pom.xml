@@ -81,6 +81,7 @@
                             <buildArgs>
                                 <JAR_FILE>bargin-on-azure-${project.version}.jar</JAR_FILE>
                             </buildArgs>
+                            <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                         </configuration>
                     </execution>
                 </executions>
@@ -100,7 +101,7 @@
                     <region>eastus</region>
                     <containerSettings>
                         <imageName>bargainonazure.azurecr.io/bargain-on-azure:${docker.image.tag}</imageName>
-                        <serverId>azure-price-acr</serverId>
+                        <serverId>bargainonazure.azurecr.io</serverId>
                         <registryUrl>https://bargainonazure.azurecr.io</registryUrl>
                     </containerSettings>
                     <appSettings>
