@@ -1,7 +1,8 @@
 package price.azzure.bargain.entity;
 
 public enum ResourceType {
-    CPU("Cpu"),
+    CPU("CPU"),
+    GPU("GPU"),
     MEMORY("Memory"),
     DISK("Disk");
 

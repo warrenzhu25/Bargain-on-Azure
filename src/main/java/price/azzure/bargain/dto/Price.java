@@ -1,10 +1,19 @@
 package price.azzure.bargain.dto;
 
 import lombok.Data;
+import price.azzure.bargain.entity.ResourceType;
+
+import java.util.Date;
 
 @Data
 public class Price {
     double price;
-    int day;
-    String resourceType;
+    Date date;
+    ResourceType resourceType;
+
+    public Price(double price, Date date, ResourceType resourceType) {
+        this.price = price;
+        this.date = date;
+        this.resourceType = resourceType;
+    }
 }

@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -27,8 +29,8 @@ public class JobDetail {
     @Column(name = "jobType")
     private JobType type;
 
-//    public Map<ResourceType, Integer> getEstimatedResourceUsage(){
-//        //TODO: an algorithm to estimate resource required for running the job
-//        return new HashMap<>();
-//    }
+    public Map<ResourceType, Integer> getEstimatedResourceUsage(){
+        //TODO: an algorithm to estimate resource required for running the job
+        return new HashMap<>();
+    }
 }
