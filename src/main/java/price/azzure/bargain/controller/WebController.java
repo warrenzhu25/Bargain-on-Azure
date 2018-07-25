@@ -257,7 +257,7 @@ public class WebController {
             batchJob.setSuggestedPrice(suggestPrice);
             batchJob.setSuggestDeadline(suggestDeadline);
 
-            return true;
+            return false;
         } else if(batchJob.getPrice() != null){
             batchJob.setSuggestDeadline(computeDeadline(batchJob));
         } else if(batchJob.getDeadline() != null){
