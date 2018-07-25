@@ -1,6 +1,5 @@
 package price.azzure.bargain.repository;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import price.azzure.bargain.entity.Resource;
 import price.azzure.bargain.entity.ResourceType;

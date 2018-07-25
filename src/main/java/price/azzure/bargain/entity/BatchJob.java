@@ -19,9 +19,11 @@ public class BatchJob {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     private Date startTime;
 
-    private double price;
+    private Double price;
 
     private Date deadline;
 
@@ -31,10 +33,10 @@ public class BatchJob {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "jobStatus")
-    private JobStatus status;
+    private JobStatus status = JobStatus.SUBMITTED;
 
     @ManyToOne
     @JoinColumn(name = "details")
     @JsonBackReference
-    private JobDetail detail;
+    private JobDetail detail = new JobDetail();
 }

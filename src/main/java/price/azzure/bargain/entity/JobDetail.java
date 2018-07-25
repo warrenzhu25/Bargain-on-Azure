@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -19,11 +20,11 @@ public class JobDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer cpuCount;
+    private Integer cpuCount = new Random().nextInt(50) + 20;
 
-    private Integer memoryCount;
+    private Integer memoryCount = new Random().nextInt(50) + 10;
 
-    private Integer diskCount;
+    private Integer diskCount = new Random().nextInt(50) + 30;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "jobType")
@@ -31,6 +32,12 @@ public class JobDetail {
 
     public Map<ResourceType, Integer> getEstimatedResourceUsage(){
         //TODO: an algorithm to estimate resource required for running the job
-        return new HashMap<>();
+        HashMap<ResourceType, Integer> resourceUsage =  new HashMap<>();
+
+        resourceUsage.put(ResourceType.CPU, cpuCount);
+        resourceUsage.put(ResourceType.MEMORY, memoryCount);
+        resourceUsage.put(ResourceType.DISK, diskCount);
+
+        return resourceUsage;
     }
 }
