@@ -55,6 +55,11 @@ public class WebController {
         return job;
     }
 
+    @GetMapping("/jobs")
+    public List<BatchJob> getBatchJobs() {
+        return Lists.newArrayList(this.jobRepository.findAll());
+    }
+
     @GetMapping("/resources")
     public List<Resource> getResource() {
         //TODO: we should return from last 7 days to future 7 days
