@@ -52,7 +52,7 @@ public class WebController {
     // For network testing
     @GetMapping("/greeting")
     public String greeting() {
-        return "greeting:5";
+        return "greeting:6";
     }
 
     @PostMapping("/jobs")
