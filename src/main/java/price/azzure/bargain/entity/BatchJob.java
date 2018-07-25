@@ -20,7 +20,7 @@ public class BatchJob {
 
     private String name;
 
-    private Date startTime;
+    private Date startTime = new Date();
 
     private Double price;
 
